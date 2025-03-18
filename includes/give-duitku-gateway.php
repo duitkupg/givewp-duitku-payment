@@ -18,8 +18,11 @@ class Give_Duitku_Gateway {
 		$this->merchantCode	= give_get_option( 'duitku_merchant_code', false );
 		$this->apikey		= give_get_option( 'duitku_api_key', false );
 		$this->credCode		= give_get_option( 'duitku_credential_code', false);
+		$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
 		self::$log_enabled	= give_get_option( 'duitku_debug', false ) == 'on' ? true : false;
 		
+		$this->sanitized    = true;
+		$this->$validation	= true;
 		//add url callback
 		add_action('init', array($this, 'return_listener'));
 		
@@ -29,7 +32,6 @@ class Give_Duitku_Gateway {
 		//add payment method inquiry
 		add_action('give_gateway_VC', array($this, 'process_payment'));
 		add_action('give_gateway_BK', array($this, 'process_payment'));
-		add_action('give_gateway_M1', array($this, 'process_payment'));
 		add_action('give_gateway_BT', array($this, 'process_payment'));
 		add_action('give_gateway_B1', array($this, 'process_payment'));
 		add_action('give_gateway_A1', array($this, 'process_payment'));
@@ -40,18 +42,23 @@ class Give_Duitku_Gateway {
 		add_action('give_gateway_MG', array($this, 'process_payment'));
 		add_action('give_gateway_BC', array($this, 'process_payment'));
 		add_action('give_gateway_M2', array($this, 'process_payment'));
-		add_action('give_gateway_DN', array($this, 'process_payment'));
 		add_action('give_gateway_SP', array($this, 'process_payment'));
 		add_action('give_gateway_SA', array($this, 'process_payment'));
 		add_action('give_gateway_AG', array($this, 'process_payment'));
 		add_action('give_gateway_S1', array($this, 'process_payment'));
 		add_action('give_gateway_LA', array($this, 'process_payment'));
 		add_action('give_gateway_LF', array($this, 'process_payment'));
-		
+		add_action('give_gateway_NC', array($this, 'process_payment'));
+		add_action('give_gateway_BR', array($this, 'process_payment'));
+		add_action('give_gateway_A2', array($this, 'process_payment'));
+		add_action('give_gateway_IR', array($this, 'process_payment'));
+		add_action('give_gateway_DA', array($this, 'process_payment'));
+		add_action('give_gateway_LQ', array($this, 'process_payment'));
+		add_action('give_gateway_NQ', array($this, 'process_payment'));
+
 		//remove form cc
 		add_action('give_VC_cc_form', '__return_false');
 		add_action('give_BK_cc_form', '__return_false');
-		add_action('give_M1_cc_form', '__return_false');
 		add_action('give_BT_cc_form', '__return_false');
 		add_action('give_B1_cc_form', '__return_false');
 		add_action('give_A1_cc_form', '__return_false');
@@ -62,16 +69,22 @@ class Give_Duitku_Gateway {
 		add_action('give_MG_cc_form', '__return_false');
 		add_action('give_BC_cc_form', '__return_false');
 		add_action('give_M2_cc_form', '__return_false');
-		add_action('give_DN_cc_form', '__return_false');
 		add_action('give_SP_cc_form', '__return_false');
 		add_action('give_SA_cc_form', '__return_false');
 		add_action('give_AG_cc_form', '__return_false');
 		add_action('give_S1_cc_form', '__return_false');
 		add_action('give_LA_cc_form', '__return_false');
 		add_action('give_LF_cc_form', '__return_false');
+		add_action('give_NC_cc_form', '__return_false');
+		add_action('give_BR_cc_form', '__return_false');
+		add_action('give_A2_cc_form', '__return_false');
+		add_action('give_IR_cc_form', '__return_false');
+		add_action('give_DA_cc_form', '__return_false');
+		add_action('give_LQ_cc_form', '__return_false');
+		add_action('give_NQ_cc_form', '__return_false');
 		
 		add_filter('give_enabled_payment_gateways', array($this, 'give_filter_duitku_gateway'), 10, 2);
-
+		
 	}
 
 	static function get_instance() {
@@ -90,9 +103,9 @@ class Give_Duitku_Gateway {
 		  && !give_is_setting_enabled(give_get_meta($form_id, 'duitku_customize_duitku_donations', true, 'global'), array('enabled', 'global'))
 		
 		) {
-			
+		
 		  unset($gateway_list['duitku']);
-		  
+		
 		}
 		
 		return $gateway_list;
@@ -160,18 +173,26 @@ class Give_Duitku_Gateway {
 		
 		return add_query_arg($arg, site_url('/'));
 	}
-  
+
+
 	public function process_payment($purchase_data) {
+		include_once dirname(__FILE__) . '/duitku/give-gateway-duitku-sanitized.php';
+		include_once dirname(__FILE__) . '/duitku/give-gateway-duitku-validation.php';
+		$expiryPeriod = intval($this->expiryPeriod);
+
+		if ($expiryPeriod > 1440 || $expiryPeriod=="" || $expiryPeriod<1) {
+			$expiryPeriod = 1440;
+		}
 		give_validate_nonce($purchase_data['gateway_nonce'], 'give-gateway');
-		
+
 		if (empty($this->merchantCode) || empty($this->apikey) || empty($this->endpoint))
 			exit("Setting API configuration menu <b>Donations -> Settings -> Payment Gateways -> Duitku Settings</b>");
-		
+
 		$payment_id = $this->create_payment($purchase_data);
 
-		
+
 		$url = $this->endpoint . '/api/merchant/v2/inquiry';
-	
+
 		//generate Signature
 		$signature = md5($this->merchantCode . $payment_id . intval($purchase_data["price"]) . $this->apikey);
 
@@ -179,12 +200,13 @@ class Give_Duitku_Gateway {
 			'name' => $purchase_data['post_data']['give-form-title'],
 			'price' => intval($purchase_data["price"]),
 			'quantity' => 1
-		);		
-		
+		);
+
 		$itemDetails = array(
 			$item1
 		);
-		
+
+
 		// Prepare Parameters
 		$params = array(
 			'merchantCode' 		=> $this->merchantCode, // API Key Merchant /
@@ -199,9 +221,9 @@ class Give_Duitku_Gateway {
 			'phoneNumber' 		=> '',
 			'itemDetails' 		=> $itemDetails,
 			'signature' 		=> $signature,
-			
-			'returnUrl' 		=> $this->get_return_url($payment_id),
-			'callbackUrl' 		=> $this->get_listener_url($payment_id)
+			'expiryPeriod'		=> $expiryPeriod,
+			'returnUrl' 		=> esc_url_raw($this->get_return_url($payment_id)),
+			'callbackUrl' 		=> esc_url_raw($this->get_listener_url($payment_id))
 		);
 
 		if ($purchase_data['post_data']["payment-mode"] === "MG") {
@@ -211,7 +233,14 @@ class Give_Duitku_Gateway {
 
 		$headers = array('Content-Type' => 'application/json');
 
+		if ($this->sanitized) {
+			Give_Gateway_Duitku_Sanitized::duitkuRequest($params);
+		}
 		
+		if ($this->validation) {
+			Give_Gateway_Duitku_Validation::duitkuRequest($params);
+		}
+
 		// Send this payload to Authorize.net for processing
 		$response = wp_remote_post($url, array(
 			'method' => 'POST', 'body' => json_encode($params), 'timeout' => 90, 'sslverify' => false, 'headers' => $headers,
@@ -279,16 +308,16 @@ class Give_Duitku_Gateway {
 		}
 		
 		
-		$order_id 	= trim(stripslashes($_REQUEST['merchantOrderId']));
-		$status 	= trim(stripslashes($_REQUEST['resultCode']));
-		$reference 	= trim(stripslashes($_REQUEST['reference']));
+		$order_id 	= isset($_REQUEST['merchantOrderId'])? sanitize_text_field($_REQUEST['merchantOrderId']): null;;
+		$status 	= isset($_REQUEST['resultCode'])? sanitize_text_field($_REQUEST['resultCode']) : null;
+		$reference 	= isset($_REQUEST['reference'])? sanitize_text_field($_REQUEST['reference']) : null;
 		
 		if ($status == '00' && $this->validate_transaction($order_id, $reference)) {
 			
 			give_update_payment_status($order_id, 'publish');
 			
 			//duitku log success
-			$this->log("duitku log success", $order_id, ($_REQUEST));
+			$this->log("duitku log success", $order_id, sanitize_text_field($_REQUEST));
 			
 			
 		} elseif ($status == '01') {
@@ -296,7 +325,7 @@ class Give_Duitku_Gateway {
 			give_update_payment_status( $order_id, 'processing' );
 			
 			//duitku log processing
-			$this->log("duitku log processing.", $order_id, ($_REQUEST));
+			$this->log("duitku log processing.", $order_id, sanitize_text_field($_REQUEST));
 			
 			//back page home
 			wp_redirect( site_url('/') );
@@ -305,7 +334,7 @@ class Give_Duitku_Gateway {
 			give_update_payment_status( $order_id, 'failed' );
 			
 			//duitku log failed
-			$this->log("duitku log failed.", $order_id, ($_REQUEST));
+			$this->log("duitku log failed.", $order_id, sanitize_text_field($_REQUEST));
 			
 			wp_redirect( give_get_failed_transaction_uri('?payment-id=' . $order_id) );
 			
@@ -335,7 +364,7 @@ class Give_Duitku_Gateway {
 		$response = wp_remote_post($url, array(
 			'method' => 'POST', 'body' => json_encode($params), 'timeout' => 90, 'sslverify' => false, 'headers' => $headers,
 		));
-
+		
 		$response_body = wp_remote_retrieve_body($response);
 		$response_code = wp_remote_retrieve_response_code($response);
 
@@ -372,16 +401,15 @@ class Give_Duitku_Gateway {
 		  return;
 		}
 		
-
-		$order_id 	= trim(stripslashes($_REQUEST['merchantOrderId']));
-		$status 	= trim(stripslashes($_REQUEST['resultCode']));
-				
-		
+	
+		$order_id 	= isset($_REQUEST['merchantOrderId'])? sanitize_text_field($_REQUEST['merchantOrderId']): null;;
+		$status 	= isset($_REQUEST['resultCode'])? sanitize_text_field($_REQUEST['resultCode']) : null;
+	
 		if ( $status  == "01" ) {
 			give_update_payment_status( $order_id, 'processing' );
 				
 			//duitku log processing
-			$this->log("duitku log processing.", $order_id, ($_REQUEST));
+			$this->log("duitku log processing.", $order_id, sanitize_text_field($_REQUEST));
 				
 			$return_url = add_query_arg( array(
 				'payment-confirmation' => 'duitku',
@@ -396,7 +424,7 @@ class Give_Duitku_Gateway {
 			give_update_payment_status( $order_id, 'failed' );
 				
 			//duitku log failed
-			$this->log("duitku log failed.", $order_id, ($_REQUEST));
+			$this->log("duitku log failed.", $order_id, sanitize_text_field($_REQUEST));
 			
 			$return_url = give_get_failed_transaction_uri( '?payment-id=' . $payment_id );
 			wp_redirect($return_url);

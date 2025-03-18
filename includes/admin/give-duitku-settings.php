@@ -52,7 +52,7 @@ class Give_Duitku_Settings {
   public function setup_hooks() {
 
     $this->section_id    = 'duitku';
-    $this->section_label = __('Duitku', 'give-duitku');
+    $this->section_label = esc_html('Duitku', 'give-duitku');
 
     // Add payment gateway to payment gateways list.
     // add_filter( 'give_payment_gateways', array( $this, 'add_gateways' ) );
@@ -91,14 +91,14 @@ class Give_Duitku_Settings {
       'type' => 'title',
 		),
 		array(
-			'title' 	=> __('Merchant Code', 'give-duitku'),
-			'desc' 		=> __('masukkan kode merchant anda.', 'give-duitku'),
+			'title' 	=> esc_html('Merchant Code', 'give-duitku'),
+			'desc' 		=> esc_html('Masukkan kode merchant anda.', 'give-duitku'),
 			'id' 		=> 'duitku_merchant_code',
 			'type' 		=> 'text',
 			'default' 	=> '',
 		),
 		array(
-			'title' 	=> __('API Key', 'give-duitku'),
+			'title' 	=> esc_html('API Key', 'give-duitku'),
 			'desc' 		=> __(' Dapatkan API Key <a href=https://duitku.com>disini</a></small>.', 'give-duitku'),
 			'id' 		=> 'duitku_api_key',
 			'type' 		=> 'text',
@@ -106,7 +106,7 @@ class Give_Duitku_Settings {
 			'default' 	=> '',
 		),
     array(
-      'title'   => __('Credential Code', 'give-duitku'),
+      'title'   => esc_html('Credential Code', 'give-duitku'),
       'desc'    => __('Dapatkan Credential Code <a href=https://duitku.com>disini</a></small>. Kosongkan Credential Code apabila anda memiliki lebih dari 1 Credential Code atau belum mengaktifkan metode pembayaran Credit Card Facilitator.', 'give-duitku'),
       'id'    => 'duitku_credential_code',
       'type'    => 'text',
@@ -114,15 +114,25 @@ class Give_Duitku_Settings {
       'default'   => '',
     ),
 		array(
-			'title' 	=> __('Endpoint', 'give-duitku'),
-			'desc' 		=> __('Duitku endpoint API. Mohon isi merchant code dan api key sebelum mengakses endpoint.', 'give-duitku'),
+			'title' 	=> esc_html('Endpoint', 'give-duitku'),
+			'desc' 		=> esc_html('Duitku endpoint API. Mohon isi merchant code dan api key sebelum mengakses endpoint.', 'give-duitku'),
 			'id' 		=> 'duitku_endpoint',
 			'type' 		=> 'text',
 			'css' 		=> 'width:25em;',
 			'default' 	=> '',
 		),
+    array(
+			'title' 	=> esc_html('Expiry Period', 'give-duitku'),
+			'desc' 		=> esc_html('Expiry Period dalam satuan menit. Default: 1440.', 'give-duitku'),
+			'id' 		=> 'duitku_expiry_period',
+			'type' 		=> 'number',
+			'css' 		=> 'width:25em;',
+      'min'     => 1,
+      'max'     => 1440,
+			'default' 	=> 1440,
+		),
 		array(
-				'title' => __('Duitku Debug', 'give-duitku'),
+				'title' => esc_html('Duitku Debug', 'give-duitku'),
 				'desc' => sprintf(__('Duitku Log dapat digunakan untuk melihat event, seperti notifikasi pembayaran.
                  <code>menu tools -> logs</code> ', ''), ""),
 				'id' => 'duitku_debug',
@@ -135,7 +145,7 @@ class Give_Duitku_Settings {
       ),
 
     );
-
+    
     return $give_duitku_settings;
   }
 
