@@ -324,6 +324,10 @@ if (!class_exists('Give_Duitku')):
         'admin_label'    => __( 'Duitku Nobu', 'give-duitku' ),
         'checkout_label' => __( 'Nobu', 'give-duitku' ),
       ),
+      'JP'  => array(
+        'admin_label'    => __( 'Duitku Jenius Pay', 'give-duitku' ),
+        'checkout_label' => __( 'Jenius Pay', 'give-duitku' ),
+      ),
       'GQ'  => array(
         'admin_label'    => __( 'Duitku Gudang Voucher QRIS', 'give-duitku' ),
         'checkout_label' => __( 'Gudang Voucher QRIS', 'give-duitku' ),

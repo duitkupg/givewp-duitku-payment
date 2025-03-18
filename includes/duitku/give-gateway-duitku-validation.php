@@ -37,13 +37,13 @@ class Give_Gateway_Duitku_Validation
         //     throw new Exception(__('The phone number entered did not appear to be a valid phoneNumber address. Please enter a valid phone number.', 'wc-duitku'));
         // }
 
-        if (filter_var($json['phoneNumber'], FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => '/[a-zA-Z\~\!\@\#\$\%\^\&\*\{\}\;\:\,\<\.\>\?]/']])) {
-            throw new Exception(__('The phone number entered did not appear to be a valid phoneNumber address. Please enter a valid phone number.', 'wc-duitku'));
-        } 
+        // if (filter_var($json['phoneNumber'], FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => '/[a-zA-Z\~\!\@\#\$\%\^\&\*\{\}\;\:\,\<\.\>\?]/']])) {
+        //     throw new Exception(__('The phone number entered did not appear to be a valid phoneNumber address. Please enter a valid phone number.', 'wc-duitku'));
+        // } 
 	
-        if (strlen($json['phoneNumber']) < 7) {
-            throw new Exception(__('The phone number length minimum is 7 digits.', 'wc-duitku'));
-        } 
+        // if (strlen($json['phoneNumber']) < 7) {
+        //     throw new Exception(__('The phone number length minimum is 7 digits.', 'wc-duitku'));
+        // } 
 	
 
   
