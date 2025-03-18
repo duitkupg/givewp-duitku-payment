@@ -22,7 +22,7 @@ class Give_Duitku_Gateway {
 		self::$log_enabled	= give_get_option( 'duitku_debug', false ) == 'on' ? true : false;
 		
 		$this->sanitized    = true;
-		$this->$validation	= true;
+		$this->validation	= true;
 		//add url callback
 		add_action('init', array($this, 'return_listener'));
 		
@@ -55,6 +55,7 @@ class Give_Duitku_Gateway {
 		add_action('give_gateway_DA', array($this, 'process_payment'));
 		add_action('give_gateway_LQ', array($this, 'process_payment'));
 		add_action('give_gateway_NQ', array($this, 'process_payment'));
+		add_action('give_gateway_GQ', array($this, 'process_payment'));
 
 		//remove form cc
 		add_action('give_VC_cc_form', '__return_false');
@@ -82,6 +83,7 @@ class Give_Duitku_Gateway {
 		add_action('give_DA_cc_form', '__return_false');
 		add_action('give_LQ_cc_form', '__return_false');
 		add_action('give_NQ_cc_form', '__return_false');
+		add_action('give_GQ_cc_form', '__return_false');
 		
 		add_filter('give_enabled_payment_gateways', array($this, 'give_filter_duitku_gateway'), 10, 2);
 		

@@ -3,7 +3,7 @@
  * Plugin Name: Duitku for GiveWP
  * Plugin URI:  http://docs.duitku.com/
  * Description: Duitku Payment Gateway
- * Version:     1.2.0
+ * Version:     1.3.0
  * Author:      Duitku
  * Author URI:  https://www.duitku.com
  * Contributors: anggiyawan@duitku.com, charisch09, rayhanduitku
@@ -323,6 +323,10 @@ if (!class_exists('Give_Duitku')):
       'NQ'  => array(
         'admin_label'    => __( 'Duitku Nobu', 'give-duitku' ),
         'checkout_label' => __( 'Nobu', 'give-duitku' ),
+      ),
+      'GQ'  => array(
+        'admin_label'    => __( 'Duitku Gudang Voucher QRIS', 'give-duitku' ),
+        'checkout_label' => __( 'Gudang Voucher QRIS', 'give-duitku' ),
       )
 
 		);
