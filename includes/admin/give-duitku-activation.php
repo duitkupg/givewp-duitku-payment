@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
 function give_duitku_plugin_action_links($actions) {
   $new_actions = array(
     'settings' => sprintf(
-      '<a href="%1$s">%2$s</a>', admin_url('edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=duitku-settings'), esc_html__('Settings', 'give-duitku')
+      '<a href="%1$s">%2$s</a>', admin_url('edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=duitku'), esc_html__('Settings', 'give-duitku')
     ),
   );
   return array_merge($new_actions, $actions);

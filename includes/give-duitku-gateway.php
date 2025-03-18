@@ -38,6 +38,15 @@ class Give_Duitku_Gateway {
 		add_action('give_gateway_FT', array($this, 'process_payment'));
 		add_action('give_gateway_OV', array($this, 'process_payment'));
 		add_action('give_gateway_MG', array($this, 'process_payment'));
+		add_action('give_gateway_BC', array($this, 'process_payment'));
+		add_action('give_gateway_M2', array($this, 'process_payment'));
+		add_action('give_gateway_DN', array($this, 'process_payment'));
+		add_action('give_gateway_SP', array($this, 'process_payment'));
+		add_action('give_gateway_SA', array($this, 'process_payment'));
+		add_action('give_gateway_AG', array($this, 'process_payment'));
+		add_action('give_gateway_S1', array($this, 'process_payment'));
+		add_action('give_gateway_LA', array($this, 'process_payment'));
+		add_action('give_gateway_LF', array($this, 'process_payment'));
 		
 		//remove form cc
 		add_action('give_VC_cc_form', '__return_false');
@@ -51,6 +60,15 @@ class Give_Duitku_Gateway {
 		add_action('give_FT_cc_form', '__return_false');
 		add_action('give_OV_cc_form', '__return_false');
 		add_action('give_MG_cc_form', '__return_false');
+		add_action('give_BC_cc_form', '__return_false');
+		add_action('give_M2_cc_form', '__return_false');
+		add_action('give_DN_cc_form', '__return_false');
+		add_action('give_SP_cc_form', '__return_false');
+		add_action('give_SA_cc_form', '__return_false');
+		add_action('give_AG_cc_form', '__return_false');
+		add_action('give_S1_cc_form', '__return_false');
+		add_action('give_LA_cc_form', '__return_false');
+		add_action('give_LF_cc_form', '__return_false');
 		
 		add_filter('give_enabled_payment_gateways', array($this, 'give_filter_duitku_gateway'), 10, 2);
 

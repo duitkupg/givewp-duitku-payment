@@ -17,14 +17,14 @@ class Give_Duitku_Settings {
    * @access private
    * @var string $section_id
    */
-  private $section_id;
+  private $section_id = '';
 
   /**
    * @access private
    *
    * @var string $section_label
    */
-  private $section_label;
+  private $section_label = '';
 
   /**
    * Give_Duitku_Settings constructor.
@@ -52,26 +52,25 @@ class Give_Duitku_Settings {
   public function setup_hooks() {
 
     $this->section_id    = 'duitku';
-    $this->section_label = __('duitku', 'give-duitku');
+    $this->section_label = __('Duitku', 'give-duitku');
+
+    // Add payment gateway to payment gateways list.
+    // add_filter( 'give_payment_gateways', array( $this, 'add_gateways' ) );
 
     if (is_admin()) {
       // Add settings.
-      add_filter('give_settings_gateways', array($this, 'add_settings'), 99);
+      // add_filter('give_settings_gateways', array($this, 'add_settings'), 99);
+
+      // Add section settings.
+      add_filter( 'give_get_settings_gateways', array( $this, 'add_settings' ) );
+
+      // Add section to payment gateways tab.
+      add_filter( 'give_get_sections_gateways', array( $this, 'add_section' ) );
+
     }
   }
 	
-  /**
-   * Add setting section.
-   *
-   * @param array $sections Array of section.
-   *
-   * @return array
-   */
-  public function add_section($sections) {
-    $sections[$this->section_id] = $this->section_label;
-
-    return $sections;
-  }
+ 
 	
   /**
    * Add plugin settings.
@@ -82,11 +81,14 @@ class Give_Duitku_Settings {
    */
   public function add_settings($settings) {
 
+    if ( $this->section_id !== give_get_current_setting_section() ) {
+      return $settings;
+    }
+
     $give_duitku_settings = array(
 		array(
-			'name' => __('Duitku Settings', 'give-duitku'),
-			'id'   => 'give_title_duitku',
-			'type' => 'give_title',
+			'id'   => $this->section_id,
+      'type' => 'title',
 		),
 		array(
 			'title' 	=> __('Merchant Code', 'give-duitku'),
@@ -105,7 +107,7 @@ class Give_Duitku_Settings {
 		),
     array(
       'title'   => __('Credential Code', 'give-duitku'),
-      'desc'    => __('Dapatkan Credential Code <a href=https://duitku.com>disini</a></small>. Credential Code digunakan untuk melakukan pembayaran via Credit Card Facilitator', 'give-duitku'),
+      'desc'    => __('Dapatkan Credential Code <a href=https://duitku.com>disini</a></small>. Kosongkan Credential Code apabila anda memiliki lebih dari 1 Credential Code atau belum mengaktifkan metode pembayaran Credit Card Facilitator.', 'give-duitku'),
       'id'    => 'duitku_credential_code',
       'type'    => 'text',
       'css'     => 'width:25em;',
@@ -127,10 +129,27 @@ class Give_Duitku_Settings {
 				'type' => 'checkbox',
 				'default' => 'no',
 		),
+    array(
+        'id'   => $this->section_id,
+        'type' => 'sectionend',
+      ),
 
     );
 
-    return array_merge($settings, $give_duitku_settings);
+    return $give_duitku_settings;
+  }
+
+   /**
+   * Add setting section.
+   *
+   * @param array $sections Array of section.
+   *
+   * @return array
+   */
+  public function add_section($sections) {
+    $sections[$this->section_id] = $this->section_label;
+
+    return $sections;
   }
 }
 

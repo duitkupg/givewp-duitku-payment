@@ -3,7 +3,7 @@
  * Plugin Name: Duitku for GiveWP
  * Plugin URI:  http://docs.duitku.com/
  * Description: Duitku Payment Gateway
- * Version:     1.1.0
+ * Version:     1.2.0
  * Author:      Priyana Anggiyawan
  * Author URI:  https://www.duitku.com
  * Text Domain: give-Duitku
@@ -270,6 +270,42 @@ if (!class_exists('Give_Duitku')):
       'MG'  => array(
         'admin_label'    => __( 'Credit Card Facilitator', 'give-duitku' ),
         'checkout_label' => __( 'Credit Card Facilitator', 'give-duitku' ),
+      ),
+      'BC'  => array(
+        'admin_label'    => __( 'BCA Virtual Account', 'give-duitku' ),
+        'checkout_label' => __( 'BCA Virtual Account', 'give-duitku' ),
+      ),
+      'M2'  => array(
+        'admin_label'    => __( 'Mandiri Virtual Account', 'give-duitku' ),
+        'checkout_label' => __( 'Mandiri Virtual Account', 'give-duitku' ),
+      ),
+      'DN'  => array(
+        'admin_label'    => __( 'Indodana Paylater', 'give-duitku' ),
+        'checkout_label' => __( 'Indodana Paylater', 'give-duitku' ),
+      ),
+      'SP'  => array(
+        'admin_label'    => __( 'Shopee Pay', 'give-duitku' ),
+        'checkout_label' => __( 'Shopee Pay', 'give-duitku' ),
+      ),
+      'SA'  => array(
+        'admin_label'    => __( 'Shopee Pay Apps', 'give-duitku' ),
+        'checkout_label' => __( 'Shopee Pay Apps', 'give-duitku' ),
+      ),
+      'AG'  => array(
+        'admin_label'    => __( 'Bank Artha Graha', 'give-duitku' ),
+        'checkout_label' => __( 'Bank Artha Graha', 'give-duitku' ),
+      ),
+      'S1'  => array(
+        'admin_label'    => __( 'Bank Sahabat Sampoerna', 'give-duitku' ),
+        'checkout_label' => __( 'Bank Sahabat Sampoerna', 'give-duitku' ),
+      ),
+      'LA'  => array(
+        'admin_label'    => __( 'LinkAja Apps (Percentage Fee)', 'give-duitku' ),
+        'checkout_label' => __( 'LinkAja Apps', 'give-duitku' ),
+      ),
+      'LF'  => array(
+        'admin_label'    => __( 'LinkAja Apps (Fixed Fee)', 'give-duitku' ),
+        'checkout_label' => __( 'LinkAja Apps', 'give-duitku' ),
       ),
 		);
 			
