@@ -2,7 +2,7 @@
 Plugin Name: Duitku for GiveWP
 Plugin URI:  https://docs.duitku.com/payment-gateway/plugin
 Description: Duitku Payment Gateway
-Version:     1.2.0
+Version:     1.3.1
 Author:      Duitku Development Team
 Author URI:  https://www.duitku.com
 Text Domain: give-Duitku
@@ -47,6 +47,8 @@ Supported Payment Channels :
 22.	BNC
 23.	BRIVA
 24.	QRIS by Nobu
+25. Gudang Voucher QRIS
+26. Jenius Pay
 
 == Installation ==
 
