@@ -343,6 +343,10 @@ if (!class_exists('Give_Duitku')):
       'S1'  => array(
           'admin_label'    => __( 'Duitku Sahabat Sampoerna Virtual Account', 'give-duitku' ),
           'checkout_label' => __( 'Sahabat Sampoerna Virtual Account', 'give-duitku' ),
+        ),
+      'BV'  => array(
+          'admin_label'    => __( 'Duitku Bank Syariah Indonesia Virtual Account', 'give-duitku' ),
+          'checkout_label' => __( 'Bank Syariah Indonesia Virtual Account', 'give-duitku' ),
         )
 
 		);

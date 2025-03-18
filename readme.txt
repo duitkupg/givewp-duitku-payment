@@ -100,6 +100,9 @@ Integrating online payments with Duitku is very easy, web integration using our 
 
 == Changelog ==
 
+= 1.3.3 =
+* Add Bank Syariah Indonesia
+
 = 1.3.2 =
 * Add Sahabat Sampoerna
 * Add Danamon
