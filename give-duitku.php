@@ -3,7 +3,7 @@
  * Plugin Name: Duitku for GiveWP
  * Plugin URI:  http://docs.duitku.com/
  * Description: Duitku Payment Gateway
- * Version:     1.3.2
+ * Version:     1.3.4
  * Author:      Duitku
  * Author URI:  https://www.duitku.com
  * Contributors: anggiyawan@duitku.com, charisch09, rayhanduitku
@@ -83,6 +83,7 @@ if (!class_exists('Give_Duitku')):
     protected function __construct() {
       add_action('admin_init', array($this, 'check_environment'));
       add_action('plugins_loaded', array($this, 'init'));
+      $this->includes();
     }
 
     /**
@@ -93,12 +94,9 @@ if (!class_exists('Give_Duitku')):
       // Don't hook anything else in the plugin if we're in an incompatible environment.
       if (self::get_environment_warning()) {
         return;
-      }
-
-      add_filter('give_payment_gateways', array($this, 'register_gateway'));
+      }      
       add_action('init', array($this, 'register_post_statuses'), 110);
-	  
-      $this->includes();
+      add_filter('give_enabled_payment_gateways', array($this, 'give_filter_duitku_gateway'), 10, 2);
     }
 
     /**
@@ -191,7 +189,7 @@ if (!class_exists('Give_Duitku')):
     }
 
     /**
-     * Give Duitku Includes.
+     * Give Duitku Includes all Function.
      */
     private function includes() {
 
@@ -204,8 +202,11 @@ if (!class_exists('Give_Duitku')):
         include GIVE_DUITKU_PLUGIN_DIR . '/includes/admin/give-duitku-activation.php';
         include GIVE_DUITKU_PLUGIN_DIR . '/includes/admin/give-duitku-settings.php';
       }
-
-      include GIVE_DUITKU_PLUGIN_DIR . '/includes/give-duitku-gateway.php';
+      
+      //include GIVE_DUITKU_PLUGIN_DIR . '/includes/give-duitku-gateway.php'; //for Payment Gateway on Option Based Form Editor
+      include GIVE_DUITKU_PLUGIN_DIR . '/includes/give-duitku-helper.php'; //for creating Duitku Logging
+      include GIVE_DUITKU_PLUGIN_DIR . '/includes/give-duitku-listener.php'; //for creating Duitku Callback Listener
+      include GIVE_DUITKU_PLUGIN_DIR . '/includes/give-duitku-block.php'; //for creating Payment Gateway and for Payment Gateway on Visual Form Builder
     }
 
     /**
@@ -215,145 +216,20 @@ if (!class_exists('Give_Duitku')):
 
     }
 
-    /**
-     * Register the Duitku.
-     *
-     * @access      public
-     * @since       1.0
-     *
-     * @param $gateways array
-     *
-     * @return array
-     */
-    public function register_gateway($gateways) {
-
-		$gateways_add = array(
-			'VC'  => array(
-				'admin_label'    => __( 'Duitku Credit Card', 'give-duitku' ),
-				'checkout_label' => __( 'Credit Card', 'give-duitku' ),
-			),
-			'BK'  => array(
-				'admin_label'    => __( 'Duitku BCA KlikPay', 'give-duitku' ),
-				'checkout_label' => __( 'BCA KlikPay', 'give-duitku' ),
-			),
-			'BT'  => array(
-				'admin_label'    => __( 'Duitku Permata VA', 'give-duitku' ),
-				'checkout_label' => __( 'Permata VA', 'give-duitku' ),
-			),
-			'B1'  => array(
-				'admin_label'    => __( 'Duitku CIMB Niaga VA', 'give-duitku' ),
-				'checkout_label' => __( 'CIMB Niaga VA', 'give-duitku' ),
-			),
-			'A1'  => array(
-				'admin_label'    => __( 'Duitku ATM Bersama VA', 'give-duitku' ),
-				'checkout_label' => __( 'ATM Bersama VA', 'give-duitku' ),
-			),
-			'I1'  => array(
-				'admin_label'    => __( 'Duitku BNI VA', 'give-duitku' ),
-				'checkout_label' => __( 'BNI VA', 'give-duitku' ),
-			),
-			'VA'  => array(
-				'admin_label'    => __( 'Duitku Maybank VA', 'give-duitku' ),
-				'checkout_label' => __( 'Maybank VA', 'give-duitku' ),
-			),
-			'FT'  => array(
-				'admin_label'    => __( 'Duitku Retail', 'give-duitku' ),
-				'checkout_label' => __( 'Ritel', 'give-duitku' ),
-			),
-			'OV'  => array(
-				'admin_label'    => __( 'Duitku OVO Payment', 'give-duitku' ),
-				'checkout_label' => __( 'OVO Payment', 'give-duitku' ),
-			),
-      'MG'  => array(
-        'admin_label'    => __( 'Duitku Credit Card Facilitator', 'give-duitku' ),
-        'checkout_label' => __( 'Credit Card Facilitator', 'give-duitku' ),
-      ),
-      'BC'  => array(
-        'admin_label'    => __( 'Duitku BCA Virtual Account', 'give-duitku' ),
-        'checkout_label' => __( 'BCA Virtual Account', 'give-duitku' ),
-      ),
-      'M2'  => array(
-        'admin_label'    => __( 'Duitku Mandiri Virtual Account', 'give-duitku' ),
-        'checkout_label' => __( 'Mandiri Virtual Account', 'give-duitku' ),
-      ),
-      'SP'  => array(
-        'admin_label'    => __( 'Duitku Shopee Pay', 'give-duitku' ),
-        'checkout_label' => __( 'Shopee Pay', 'give-duitku' ),
-      ),
-      'SA'  => array(
-        'admin_label'    => __( 'Duitku Shopee Pay Apps', 'give-duitku' ),
-        'checkout_label' => __( 'Shopee Pay Apps', 'give-duitku' ),
-      ),
-      'AG'  => array(
-        'admin_label'    => __( 'Duitku Bank Artha Graha', 'give-duitku' ),
-        'checkout_label' => __( 'Bank Artha Graha', 'give-duitku' ),
-      ),
-      'LA'  => array(
-        'admin_label'    => __( 'Duitku LinkAja Apps (Percentage Fee)', 'give-duitku' ),
-        'checkout_label' => __( 'LinkAja Apps', 'give-duitku' ),
-      ),
-      'LF'  => array(
-        'admin_label'    => __( 'Duitku LinkAja Apps (Fixed Fee)', 'give-duitku' ),
-        'checkout_label' => __( 'LinkAja Apps', 'give-duitku' ),
-      ),
-      'NC'  => array(
-        'admin_label'    => __( 'Duitku Bank Neo Commerce', 'give-duitku' ),
-        'checkout_label' => __( 'Bank Neo Commerce', 'give-duitku' ),
-      ),
-      'BR'  => array(
-        'admin_label'    => __( 'Duitku BRIVA', 'give-duitku' ),
-        'checkout_label' => __( 'BRIVA', 'give-duitku' ),
-      ),
-      'A2'  => array(
-        'admin_label'    => __( 'Duitku POS Indonesia', 'give-duitku' ),
-        'checkout_label' => __( 'POS Indonesia', 'give-duitku' ),
-      ),
-      'IR'  => array(
-        'admin_label'    => __( 'Duitku Indomaret', 'give-duitku' ),
-        'checkout_label' => __( 'Indomaret', 'give-duitku' ),
-      ),
-      'DA'  => array(
-        'admin_label'    => __( 'Duitku DANA', 'give-duitku' ),
-        'checkout_label' => __( 'DANA', 'give-duitku' ),
-      ),
-      'LQ'  => array(
-        'admin_label'    => __( 'Duitku LinkAja', 'give-duitku' ),
-        'checkout_label' => __( 'LinkAja', 'give-duitku' ),
-      ),
-      'NQ'  => array(
-        'admin_label'    => __( 'Duitku Nobu', 'give-duitku' ),
-        'checkout_label' => __( 'Nobu', 'give-duitku' ),
-      ),
-      'JP'  => array(
-        'admin_label'    => __( 'Duitku Jenius Pay', 'give-duitku' ),
-        'checkout_label' => __( 'Jenius Pay', 'give-duitku' ),
-      ),
-      'GQ'  => array(
-        'admin_label'    => __( 'Duitku Gudang Voucher QRIS', 'give-duitku' ),
-        'checkout_label' => __( 'Gudang Voucher QRIS', 'give-duitku' ),
-      ),
-      'SQ'  => array(
-        'admin_label'    => __( 'Duitku Nusapay QRIS', 'give-duitku' ),
-        'checkout_label' => __( 'Nusapay QRIS', 'give-duitku' ),
-      ),
-      'DM'  => array(
-          'admin_label'    => __( 'Duitku Danamon Virtual Account', 'give-duitku' ),
-          'checkout_label' => __( 'Danamon Virtual Account', 'give-duitku' ),
-        ),
-      'S1'  => array(
-          'admin_label'    => __( 'Duitku Sahabat Sampoerna Virtual Account', 'give-duitku' ),
-          'checkout_label' => __( 'Sahabat Sampoerna Virtual Account', 'give-duitku' ),
-        ),
-      'BV'  => array(
-          'admin_label'    => __( 'Duitku Bank Syariah Indonesia Virtual Account', 'give-duitku' ),
-          'checkout_label' => __( 'Bank Syariah Indonesia Virtual Account', 'give-duitku' ),
-        )
-
-		);
-			
-		 $gateways = array_merge($gateways, $gateways_add);
-		 $gateways = apply_filters( 'give_duitku_label', $gateways );
-		 return $gateways;
+    public function give_filter_duitku_gateway($gateway_list, $form_id) {
+	  
+      if ((false === strpos($_SERVER['REQUEST_URI'], '/wp-admin/post-new.php?post_type=give_forms'))
+        
+        && $form_id
+        && !give_is_setting_enabled(give_get_meta($form_id, 'duitku_customize_duitku_donations', true, 'global'), array('enabled', 'global'))
+      
+      ) {
+      
+        unset($gateway_list['duitku']);
+      
+      }
+      
+      return $gateway_list;
     }
   }
 

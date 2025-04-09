@@ -2,7 +2,7 @@
 Plugin Name: Duitku for GiveWP
 Plugin URI:  https://docs.duitku.com/payment-gateway/plugin
 Description: Duitku Payment Gateway
-Version:     1.3.2
+Version:     1.3.4
 Author:      Duitku Development Team
 Author URI:  https://www.duitku.com
 Text Domain: give-Duitku
@@ -10,8 +10,9 @@ Domain Path: /languages
 Contributors: anggiyawan@duitku.com, charisch09, rayhanduitku
 Tags: duitku, indonesia, paymentgateways, donation, BCA, Mandiri, BRI, CIMB, BNI
 Requires at least: 6.0.1
-Tested up to: 6.0.1
-Stable tag: 1.2.0
+Tested up to: 6.7.2
+Stable tag: 1.3.4
+Requires PHP: 5.6
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -51,6 +52,8 @@ Supported Payment Channels :
 26. Jenius Pay
 27. Danamon Virtual Account
 28. Sahabat Sampoerna Virtual Account
+29. Bank Syariah Indonesia Virtual Account
+30. Nusapay QRIS
 
 == Installation ==
 
@@ -99,6 +102,17 @@ Integrating online payments with Duitku is very easy, web integration using our 
 3. Duitku Credentials Settings
 
 == Changelog ==
+
+= 1.3.4 =
+* Implement Visual Donation Form
+* Add Nusapay QRIS
+* Add Prefix Order Id
+* Changed Environment field from URL input to dropdown for effective option control
+* Remove Credential Code
+* Update logging for transaction processing, transaction status checks, and callback handling
+* Add secureRouteMethods for encrypted returnUrl in Visual Donation Form
+* Update callback listener to use registered routes for fixed callback URL
+* Add Duitku block for Visual Donation Form integration
 
 = 1.3.3 =
 * Add Bank Syariah Indonesia
