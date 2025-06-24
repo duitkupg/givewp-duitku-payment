@@ -104,7 +104,7 @@ class DuitkuGatewayFT extends PaymentGateway {
 		$this->merchantCode	= give_get_option( 'duitku_merchant_code', false );
 		$this->apikey		= give_get_option( 'duitku_api_key', false );
 		$this->credCode		= give_get_option( 'duitku_credential_code', "");
-		$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
+				$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
 		$this->merchantPrefix = give_get_option( 'duitku_merchant_prefix', false);
 		self::$log_enabled	= give_get_option( 'duitku_debug', false ) == 'on' ? true : false;
 		$this->sanitized    = true;
@@ -120,9 +120,10 @@ class DuitkuGatewayFT extends PaymentGateway {
 		}
 
 		//This will run if the configuration didnt set yet
-		if (empty($this->merchantCode) || empty($this->apikey) || empty($this->environment))
-			exit("Setting API configuration menu <b>Donations -> Settings -> Payment Gateways -> Duitku Settings</b>");
-
+		if (empty($this->merchantCode) || empty($this->apikey) || empty($this->environment)){
+			$status_message = esc_html__("Error: API configuration incomplete. Please ensure all required fields are properly set before proceeding. Menu Donations - Settings - Payment Gateways - Duitku" );
+			throw new PaymentGatewayException($status_message);
+}
 		if(!empty($this->merchantPrefix)){
 			$payment_id = $this->merchantPrefix.$donation->id;
 		} else {
@@ -231,26 +232,13 @@ class DuitkuGatewayFT extends PaymentGateway {
 		if ($response_code == '200') {
             return new RedirectOffsite( $resp->paymentUrl );
 		} else {
-			if ($response_code = "400") {	
-				 //Duitku_Givewp_Helper::log($resp->Message, $payment_id, $response);	
-                if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-                    $status_message = esc_html__('400: Something went wrong, please contact the merchant', 'give-duitku' );
+			                if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+                    $status_message = $resp->Message;
                 } else {
-                    $status_message = esc_html__('else: Something went wrong, please contact the merchant', 'give-duitku' );
-                }
-                throw new PaymentGatewayException( $status_message );			
-			}
-			else
-			{
-				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-                    $status_message = $e->getMessage();
-                } else {
-                    $status_message = esc_html__('else: Something went wrong, please contact the merchant', 'give-duitku' );
+                    $status_message = esc_html__('Error: Something went wrong, please contact the merchant', 'give-duitku' );
                 }
                 throw new PaymentGatewayException( $status_message );
-			}
-			return new RedirectOnsite( give_get_failed_transaction_uri('?payment-id=' . $payment_id) );
-		}
+					}
 	}
 
 	//not yet implemented, but need to be here
