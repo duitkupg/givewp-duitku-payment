@@ -108,7 +108,7 @@ class DuitkuGatewayGQ extends PaymentGateway {
         $this->environment		= give_get_option( 'duitku_environment', "sandbox" );
 		$this->merchantCode	= give_get_option( 'duitku_merchant_code', false );
 		$this->apikey		= give_get_option( 'duitku_api_key', false );
-						$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
+		$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
 		$this->merchantPrefix = give_get_option( 'duitku_merchant_prefix', false);
 		self::$log_enabled	= give_get_option( 'duitku_debug', false ) == 'on' ? true : false;
 		$this->sanitized    = true;
@@ -127,7 +127,7 @@ class DuitkuGatewayGQ extends PaymentGateway {
 		if (empty($this->merchantCode) || empty($this->apikey) || empty($this->environment)){
 			$status_message = esc_html__("Error: API configuration incomplete. Please ensure all required fields are properly set before proceeding. Menu Donations - Settings - Payment Gateways - Duitku" );
 			throw new PaymentGatewayException($status_message);
-}
+		}
 		if(!empty($this->merchantPrefix)){
 			$payment_id = $this->merchantPrefix.$donation->id;
 		} else {
@@ -184,7 +184,7 @@ class DuitkuGatewayGQ extends PaymentGateway {
 			'callbackUrl' 		=> $callbackUrl // Callback URL will be used by Duitku to send HTTP Post, inform Payment Status
 		);
 
-		
+
 		// Set header to application/json
 		$headers = array('Content-Type' => 'application/json');
 
@@ -228,13 +228,13 @@ class DuitkuGatewayGQ extends PaymentGateway {
 		if ($response_code == '200') {
             return new RedirectOffsite( $resp->paymentUrl );
 		} else {
-			                if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-                    $status_message = $resp->Message;
-                } else {
-                    $status_message = esc_html__('Error: Something went wrong, please contact the merchant', 'give-duitku' );
-                }
-                throw new PaymentGatewayException( $status_message );
-					}
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				$status_message = $resp->Message;
+			} else {
+				$status_message = esc_html__('Error: Something went wrong, please contact the merchant', 'give-duitku' );
+			}
+			throw new PaymentGatewayException( $status_message );
+		}
 	}
 
 	//not yet implemented, but need to be here
@@ -251,7 +251,7 @@ class DuitkuGatewayGQ extends PaymentGateway {
         $transactionId = sanitize_text_field($queryParams['merchant-order-id']);
 		$donation = Donation::find($donationId);
 		if ($donation->status->getValue() != 'publish'){
-			$donation->status = DonationStatus::PROCESSING();
+			$donation->status = DonationStatus::PENDING();
 		}
 
         //change the status of donation
