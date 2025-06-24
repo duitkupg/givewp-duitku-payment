@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuBNIGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -28,19 +29,19 @@
           "You will be redirected to Duitku BNI VA Payment Gateway."
       ),
       window.wp.element.createElement(
-        "img",
-        {
-          style: { 
-            display: "block",
-            margin: "0 auto",
-            marginBottom: 0,
-            width : 150,
-            height : 50,
-           },
-           src : "https://images.duitku.com/hotlink-ok/I1.PNG",
-           alt : "BNI Logo",
-        },
-      ),
+          "img",
+          {
+            style: { 
+              display: "block",
+              margin: "0 auto",
+              marginBottom: 0,
+              width : 150,
+              height : 50,
+             },
+             src : pluginUrl + "assets/images/bni_qris.png",
+             alt : "BNI Logo",
+          },
+        ),
     );
   }
 

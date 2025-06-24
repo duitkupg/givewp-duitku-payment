@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -34,10 +35,10 @@
             display: "block",
             margin: "0 auto",
             marginBottom: 0,
-            width : 150,
+            width : 125,
             height : 50,
            },
-           src : "https://images.duitku.com/hotlink-ok/OV.PNG",
+           src : pluginUrl + "assets/images/ovo.png",
            alt : "OVO Logo",
         },
       ),

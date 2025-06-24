@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -35,9 +36,9 @@
             margin: "0 auto",
             marginBottom: 0,
             width : 150,
-            height : 50,
+            height : 75,
            },
-           src : "https://images.duitku.com/hotlink-ok/VC.PNG",
+           src : pluginUrl + "assets/images/cc.png",
            alt : "Credit Card Logo",
         },
       ),

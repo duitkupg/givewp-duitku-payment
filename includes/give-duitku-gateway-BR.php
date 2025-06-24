@@ -85,6 +85,10 @@ class DuitkuGatewayBR extends PaymentGateway {
 			[ 'react', 'wp-element' ],
 			'1.0.0',
 			true );
+
+		wp_localize_script($handle, 'GiveDuitkuData', array(
+			'pluginUrl' => plugin_dir_url( __FILE__ )
+		));
 	}
 
 	//  /**
