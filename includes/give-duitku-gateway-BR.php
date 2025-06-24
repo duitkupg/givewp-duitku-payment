@@ -104,8 +104,7 @@ class DuitkuGatewayBR extends PaymentGateway {
         $this->environment		= give_get_option( 'duitku_environment', "sandbox" );
 		$this->merchantCode	= give_get_option( 'duitku_merchant_code', false );
 		$this->apikey		= give_get_option( 'duitku_api_key', false );
-		$this->credCode		= give_get_option( 'duitku_credential_code', "");
-				$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
+						$this->expiryPeriod = give_get_option( 'duitku_expiry_period', false);
 		$this->merchantPrefix = give_get_option( 'duitku_merchant_prefix', false);
 		self::$log_enabled	= give_get_option( 'duitku_debug', false ) == 'on' ? true : false;
 		$this->sanitized    = true;
@@ -181,15 +180,7 @@ class DuitkuGatewayBR extends PaymentGateway {
 			'callbackUrl' 		=> $callbackUrl // Callback URL will be used by Duitku to send HTTP Post, inform Payment Status
 		);
 
-		if ($donation->gatewayId === "MG") {
-			$params['credCode'] = $this->credCode;
-			if($this->environment == "production") {
-				$url = 'https://passport.duitku.com/webapi/api/merchant/creditcard/inquiry';
-			} else {
-				$url = 'https://sandbox.duitku.com/webapi/api/merchant/creditcard/inquiry';
-			} 
-		}
-
+		
 		// Set header to application/json
 		$headers = array('Content-Type' => 'application/json');
 
