@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -37,7 +38,7 @@
             width : 150,
             height : 45,
            },
-           src : "https://images.duitku.com/hotlink-ok/BK.PNG",
+           src : pluginUrl + "assets/images/bca-klikpay.png",
            alt : "BCA Klikpay Logo",
         },
       ),

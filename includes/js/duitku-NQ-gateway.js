@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -25,7 +26,7 @@
           style: { marginBottom: 10 },
         },
         settings.message ||
-          "You will be redirected to Duitku NOBU Payment Gateway."
+          "You will be redirected to Duitku NOBU QRIS Payment Gateway."
       ,
       window.wp.element.createElement(
         "img",
@@ -37,7 +38,7 @@
             width : 150,
             height : 50,
            },
-           src : "https://images.duitku.com/hotlink-ok/NQ.PNG",
+           src : pluginUrl + "assets/images/nobu.png",
            alt : "NOBU Logo",
         },
       ),)

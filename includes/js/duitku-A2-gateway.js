@@ -13,6 +13,8 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
+
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -26,7 +28,21 @@
         },
         settings.message ||
           "You will be redirected to Duitku POS Indonesia Payment Gateway."
-      )
+      ),
+      window.wp.element.createElement(
+        "img",
+        {
+          style: { 
+            display: "block",
+            margin: "0 auto",
+            marginBottom: 0,
+            width : 150,
+            height : 75,
+           },
+           src : pluginUrl + "assets/images/pospay.png",
+           alt : "Pos Indonesia",
+        },
+      ),
     );
   }
 

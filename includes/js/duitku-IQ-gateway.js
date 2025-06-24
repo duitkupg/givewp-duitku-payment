@@ -13,6 +13,7 @@
      *
      * @see https://react.dev/reference/react/createElement
      */
+    const pluginUrl = GiveDuitkuData.pluginUrl;
     function DuitkuGatewayFields() {
       return window.wp.element.createElement(
         "div",
@@ -37,8 +38,8 @@
               width : 150,
               height : 50,
              },
-             src : "https://images.duitku.com/hotlink-ok/IQ.PNG",
-             alt : "BNI Logo",
+             src : pluginUrl + "assets/images/bni_qris.png",
+             alt : "BNI QRIS Logo",
           },
         ),
       );
