@@ -103,6 +103,13 @@ Integrating online payments with Duitku is very easy, web integration using our 
 
 == Changelog ==
 
+= 1.3.5 =
+* Fix Throw Error Messages on Checkout
+* Change URL Payment MG to V2 Inquiry
+* Update Payment method images from URL to File Assets
+* Change Donation Status after return form Processing to Pending
+* Change Return Text Callback to Log
+
 = 1.3.4 =
 * Implement Visual Donation Form
 * Add Nusapay QRIS
