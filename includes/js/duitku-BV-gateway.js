@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -37,7 +38,7 @@
             width : 150,
             height : 50,
            },
-           src : "https://images.duitku.com/hotlink-ok/BV.PNG",
+           src : pluginUrl + "assets/images/bsi.png",
            alt : "Bank Syariah Indonesia Logo",
         },
       ),

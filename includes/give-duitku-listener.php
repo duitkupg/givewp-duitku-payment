@@ -77,7 +77,7 @@ class Duitku_Givewp_Listener {
 		$par['url'] = $full_url;
 		$par['callback'] = $logCallback;
 		Duitku_Givewp_Helper::logSuccess('Retrieve Callback', $transactionId, $par);
-
+		
 		$this->merchantCode	= give_get_option( 'duitku_merchant_code', false );
 		$this->apikey		= give_get_option( 'duitku_api_key', false );
 		$donation = Donation::find($donationId);
@@ -97,16 +97,18 @@ class Duitku_Givewp_Listener {
 			$donation->status = DonationStatus::FAILED();
 			$donation->save();
 			$message = 'Payment not yet implemented';
-		}       
-	
-		return new WP_REST_Response([
+		}     
+
+		$callbackStatus = [
 			'message' => $message,
 			'donationId' => $donationId,
 			'data' => [
 				'merchantOrderId' => $transactionId,
 				'resultcode' => $resultCode,
 			]
-		]);		
+		];
+		Duitku_Givewp_Helper::logSuccess('Callback Status', $transactionId, $callbackStatus);
+		exit; 
 	}
 
 	// Check Transaction and update statuses
@@ -170,9 +172,9 @@ class Duitku_Givewp_Listener {
 			return $message;
 		} else {
 			Duitku_Givewp_Helper::log('Check Transaction Pending', $transactionId, $par);
-		}
+				}
 		
-		$message = 'Payment not yet implemented';
+$message = 'Payment not yet implemented';		
 		return $message;	
 	}
 	
