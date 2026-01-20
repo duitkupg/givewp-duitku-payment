@@ -13,6 +13,7 @@
    *
    * @see https://react.dev/reference/react/createElement
    */
+  const pluginUrl = GiveDuitkuData.pluginUrl;
   function DuitkuGatewayFields() {
     return window.wp.element.createElement(
       "div",
@@ -34,10 +35,10 @@
             display: "block",
             margin: "0 auto",
             marginBottom: 0,
-            width : 150,
-            height : 50,
+            width : 100,
+            height : 40,
            },
-           src : "https://images.duitku.com/hotlink-ok/GQ.PNG",
+           src : pluginUrl + "assets/images/gudang_voucher.png",
            alt : "Gudang Voucher Logo",
         },
       ),
