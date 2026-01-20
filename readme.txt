@@ -2,16 +2,16 @@
 Plugin Name: Duitku for GiveWP
 Plugin URI:  https://docs.duitku.com/payment-gateway/plugin
 Description: Duitku Payment Gateway
-Version:     1.3.4
+Version:     1.3.5
 Author:      Duitku Development Team
 Author URI:  https://www.duitku.com
 Text Domain: give-Duitku
 Domain Path: /languages
-Contributors: anggiyawan@duitku.com, charisch09, rayhanduitku
+Contributors: anggiyawan@duitku.com, rayhanduitku
 Tags: duitku, indonesia, paymentgateways, donation, BCA, Mandiri, BRI, CIMB, BNI
 Requires at least: 6.0.1
 Tested up to: 6.7.2
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 Requires PHP: 5.6
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
