@@ -48,6 +48,9 @@ class Duitku_Givewp_Block {
 			include 'give-duitku-gateway-DM.php';
 			include 'give-duitku-gateway-GQ.php';
 			include 'give-duitku-gateway-SQ.php';
+			include 'give-duitku-gateway-T1.php';
+			include 'give-duitku-gateway-T2.php';
+			include 'give-duitku-gateway-T3.php';
 			
 			$paymentGatewayRegister->registerGateway( DuitkuGatewayI1::class);
 			$paymentGatewayRegister->registerGateway( DuitkuGatewayVC::class);
@@ -79,6 +82,9 @@ class Duitku_Givewp_Block {
 			$paymentGatewayRegister->registerGateway( DuitkuGatewayDM::class);
 			$paymentGatewayRegister->registerGateway( DuitkuGatewayGQ::class);
 			$paymentGatewayRegister->registerGateway( DuitkuGatewaySQ::class);
+			$paymentGatewayRegister->registerGateway( DuitkuGatewayT1::class);
+			$paymentGatewayRegister->registerGateway( DuitkuGatewayT2::class);
+			$paymentGatewayRegister->registerGateway( DuitkuGatewayT3::class);
         });
 		
 	}
