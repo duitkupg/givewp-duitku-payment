@@ -38,7 +38,7 @@
             width : 300,
             height : 75,
            },
-           src : pluginUrl + "assets/images/tokopedia.png",
+           src : pluginUrl + "assets/images/duitku_tokopedia_others.png",
            alt : "Tokopedia Logo",
         },
       ),
