@@ -2,17 +2,17 @@
 Plugin Name: Duitku for GiveWP
 Plugin URI:  https://docs.duitku.com/payment-gateway/plugin
 Description: Duitku Payment Gateway
-Version:     1.3.5
+Version:     1.3.6
 Author:      Duitku Development Team
 Author URI:  https://www.duitku.com
 Text Domain: give-Duitku
 Domain Path: /languages
-Contributors: anggiyawan@duitku.com, rayhanduitku
+Contributors: anggiyawan@duitku.com, rayhanduitku, yudhiwinantoro
 Tags: duitku, indonesia, paymentgateways, donation, BCA, Mandiri, BRI, CIMB, BNI
 Requires at least: 6.0.1
-Tested up to: 6.7.2
-Stable tag: 1.3.5
-Requires PHP: 5.6
+Tested up to: Wordpress 6.9, GiveWP 4.13.2
+Stable tag: 1.3.6
+Requires PHP: 7.4
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
 
@@ -54,6 +54,9 @@ Supported Payment Channels :
 28. Sahabat Sampoerna Virtual Account
 29. Bank Syariah Indonesia Virtual Account
 30. Nusapay QRIS
+31. Tokopedia Card payment
+32. Tokopedia E-Wallet
+33. Tokopedia Others
 
 == Installation ==
 
@@ -102,6 +105,11 @@ Integrating online payments with Duitku is very easy, web integration using our 
 3. Duitku Credentials Settings
 
 == Changelog ==
+
+= 1.3.6 =
+* Add Tokopedia Card Payment
+* Add Tokopedia E-Wallet
+* Add Tokopedia Others
 
 = 1.3.5 =
 * Fix Throw Error Messages on Checkout

@@ -11,7 +11,7 @@ use Give\Helpers\Language;
 use Give\Helpers\Form\Template;
 use Give\Donations\Models\DonationNote;
 
-class DuitkuGatewayLQ extends PaymentGateway {
+class DuitkuGatewayT3 extends PaymentGateway {
 	/**
 	 * Initialize variabel, avoid depreceated in newer version php
 	 */
@@ -30,7 +30,7 @@ class DuitkuGatewayLQ extends PaymentGateway {
 	 * Initialize id for Payment Gateway method, each one need to be different
 	 */
 	public static function id(): string {
-		return 'LQ';
+		return 'T3';
 	}
 
 	public function getId(): string {
@@ -41,14 +41,14 @@ class DuitkuGatewayLQ extends PaymentGateway {
 	 * Create Name for Payment Gateway
 	 */
 	public function getName(): string {
-		return __( 'Duitku Link Aja QRIS', 'give-duitku' );
+		return __( 'Duitku Tokopedia Others', 'give-duitku' );
 	}
 
 	/**
 	 * Create Label for Payment Gateway
 	 */
 	public function getPaymentMethodLabel(): string {
-		return __( 'Link Aja QRIS', 'give-duitku' );
+		return __( 'Tokopedia Others', 'give-duitku' );
 	}
 
 	/**
@@ -56,10 +56,11 @@ class DuitkuGatewayLQ extends PaymentGateway {
 	 */
 	public function getLegacyFormFieldMarkup( $formId, $args ) {
 		return "<div class=''>
-            <p>You will be redirected to Duitku Link Aja QRIS Payment Gateway</p>
+            <p>You will be redirected to Duitku Tokopedia Others Payment Gateway</p>
         </div>";
 	}
 
+	
 	/**
 	 * Register a js file to Display Gateway Fields or Information for v3 Donation Form 
 	 * (can be filled with instruction)
@@ -80,11 +81,10 @@ class DuitkuGatewayLQ extends PaymentGateway {
 
 		wp_enqueue_script(
 			$handle,
-			plugin_dir_url( __FILE__ ) . 'js/duitku-LQ-gateway.js',
+			plugin_dir_url( __FILE__ ) . 'js/duitku-T3-gateway.js',
 			[ 'react', 'wp-element' ],
 			'1.0.0',
 			true );
-
 		wp_localize_script($handle, 'GiveDuitkuData', array(
 			'pluginUrl' => plugin_dir_url( __FILE__ )
 		));
@@ -117,6 +117,10 @@ class DuitkuGatewayLQ extends PaymentGateway {
 		include_once dirname(__FILE__) . '/duitku/give-gateway-duitku-validation.php';
 		$expiryPeriod = intval($this->expiryPeriod);
 
+		if ($expiryPeriod > 1440 || $expiryPeriod=="" || $expiryPeriod<1) {
+			$expiryPeriod = 1440;
+		}
+		
 		//Set the maximum Expiry Period
 		if ($expiryPeriod > 1440 || $expiryPeriod=="" || $expiryPeriod<1) {
 			$expiryPeriod = 1440;
@@ -155,6 +159,7 @@ class DuitkuGatewayLQ extends PaymentGateway {
 
 		//set the Merchant URL Callback
 		$callbackUrl = site_url('/wp-json/duitku/callback');
+		
 
 		// Prepare Parameters
 		$params = array(
@@ -199,7 +204,7 @@ class DuitkuGatewayLQ extends PaymentGateway {
 		$response = wp_remote_post($url, array(
 			'method' => 'POST', 'body' => json_encode($params), 'timeout' => 90, 'sslverify' => false, 'headers' => $headers,
 		));
-		
+
 		// Retrieve the body's response if no errors found
 		$response_body = wp_remote_retrieve_body($response);
 		// Parse the response into something we can read
@@ -222,6 +227,8 @@ class DuitkuGatewayLQ extends PaymentGateway {
 		if (empty($response_body)) {
 			Duitku_Givewp_Helper::log('Duitku\'s Response was empty.', $payment_id);
 		}
+
+		
 
 		// means the inquiry was a success
 		if ($response_code == '200') {
