@@ -165,7 +165,7 @@ class DuitkuGatewayNQ extends PaymentGateway {
 			'productDetails' 	=> get_bloginfo() . ' Order : #' . $payment_id, //Your Product Detail
 			'additionalParam' 	=> '', //Add some Information here
 			'merchantUserInfo' 	=> '', //Your Merchant Info
-			'customerVaName ' 	=> $donation->firstName . " " . $donation->lastName, // Customer Name
+			'customerVaName' 	=> $donation->firstName . " " . $donation->lastName, // Customer Name
 			'email' 			=> $donation->email, // Customer Email
 			'phoneNumber' 		=> $donation->phone, // Customer Phone Number
 			'itemDetails' 		=> $itemDetails, 

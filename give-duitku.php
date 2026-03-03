@@ -3,7 +3,7 @@
  * Plugin Name: Duitku for GiveWP
  * Plugin URI:  http://docs.duitku.com/
  * Description: Duitku Payment Gateway
- * Version:     1.3.5
+ * Version:     1.3.6
  * Author:      Duitku
  * Author URI:  https://www.duitku.com
  * Contributors: anggiyawan@duitku.com, charisch09, rayhanduitku
