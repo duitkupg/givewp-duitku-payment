@@ -83,7 +83,9 @@ if (!class_exists('Give_Duitku')):
     protected function __construct() {
       add_action('admin_init', array($this, 'check_environment'));
       add_action('plugins_loaded', array($this, 'init'));
-      $this->includes();
+      add_action('before_give_init', function () {
+        $this->includes();
+      });
     }
 
     /**
