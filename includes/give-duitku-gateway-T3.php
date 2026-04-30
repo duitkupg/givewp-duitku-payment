@@ -145,7 +145,7 @@ class DuitkuGatewayT3 extends PaymentGateway {
 		} 
 
 		//generate Signature
-		$signature = md5($this->merchantCode . $payment_id . intval($donation->amount->formatToDecimal()) . $this->apikey);
+		$signature = hash_hmac("sha256" , $this->merchantCode . $payment_id . intval($donation->amount->formatToDecimal()) , $this->apikey);
 
 		//Set the item detail or donation detail
 		$item1 = array(

@@ -83,7 +83,7 @@ class Duitku_Givewp_Listener {
 		$donation = Donation::find($donationId);
 
 		$donationAmountCheck = $donation->amount->formatToDecimal();
-		$signatureCheck = md5($this->merchantCode . $amount . $merchantOrderId . $this->apikey);
+		$signatureCheck = hash_hmac("sha256",$this->merchantCode . $amount . $merchantOrderId , $this->apikey);
 
 		if ($donation->status->getValue() == 'publish'){
 			$message = 'Payment already success';
@@ -127,7 +127,7 @@ class Duitku_Givewp_Listener {
 		}
 
 		//generate Signature
-		$signature = md5($this->merchantCode . $transactionId . $this->apikey);
+		$signature = hash_hmac("sha256",$this->merchantCode . $transactionId , $this->apikey);
 
 		// Prepare Parameters
 		$params = array(
